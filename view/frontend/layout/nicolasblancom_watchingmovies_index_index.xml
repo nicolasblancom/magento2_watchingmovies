@@ -10,5 +10,10 @@
                 <argument translate="true" name="title" xsi:type="string">The Movies I'm watching</argument>
             </action>
         </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="nicolasblancom.watchingmovies.block.list"
+                   template="NicolasBlancoM_WatchingMovies::watchingmovies.phtml" />
+        </referenceContainer>
     </body>
 </page>
