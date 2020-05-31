@@ -7,3 +7,17 @@ use Magento\Framework\View\Element\Template;
     <li>Movie 2</li>
     <li>Movie 3</li>
 </ul>
+
+<script type="text/x-magento-init">
+	{
+	    "*": {
+	        "Magento_Ui/js/core/app": {
+                "components": {
+                    "watchingmovies": {
+                        "component": "NicolasBlancoM_WatchingMovies/js/view/watchingmovies"
+                    }
+                }
+	        }
+	    }
+	}
+</script>
