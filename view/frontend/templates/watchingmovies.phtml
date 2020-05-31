@@ -8,13 +8,18 @@ use Magento\Framework\View\Element\Template;
     <li>Movie 3</li>
 </ul>
 
+<div data-bind="scope: 'watchingmovies'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
 <script type="text/x-magento-init">
 	{
 	    "*": {
 	        "Magento_Ui/js/core/app": {
                 "components": {
                     "watchingmovies": {
-                        "component": "NicolasBlancoM_WatchingMovies/js/view/watchingmovies"
+                        "component": "NicolasBlancoM_WatchingMovies/js/view/watchingmovies",
+                        "template": "NicolasBlancoM_WatchingMovies/watchingmovies"
                     }
                 }
 	        }
