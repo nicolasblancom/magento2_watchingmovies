@@ -15,20 +15,7 @@ use Magento\Framework\View\Element\Template;
 <script type="text/x-magento-init">
 	{
 	    "*": {
-	        "Magento_Ui/js/core/app": {
-                "components": {
-                    "watchingmovies": {
-                        "component": "NicolasBlancoM_WatchingMovies/js/view/watchingmovies",
-                        "template": "NicolasBlancoM_WatchingMovies/watchingmovies",
-                        "movies": [
-                            {"label": "Movie 1"},
-                            {"label": "Movie 2"},
-                            {"label": "Movie 3"},
-                            {"label": "Movie 4"}
-                        ]
-                    }
-                }
-	        }
+	        "Magento_Ui/js/core/app": <?= $block->getJsLayout(); ?>
 	    }
 	}
 </script>

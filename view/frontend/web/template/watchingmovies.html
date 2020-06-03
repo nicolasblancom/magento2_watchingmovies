@@ -1,5 +1,10 @@
+<!-- ko if: $data.movies -->
 <ul data-bind="foreach: {data: movies, as: 'movie'}">
     <li>
         <span data-bind="i18n: movie.label"/>
     </li>
 </ul>
+<!-- /ko -->
+<!-- ko ifnot: $data.movies -->
+<p data-bind="i18n: 'No movies in your list yet'"></p>
+<!-- /ko -->
