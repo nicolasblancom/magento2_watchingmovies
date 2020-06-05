@@ -1,5 +1,14 @@
 define(['uiComponent'], function(Component){
     'use strict';
 
-    return Component.extend({})
+    return Component.extend({
+        defaults: {
+            movies: [
+                {label: "Movie name 1"},
+                {label: "Movie name 2"},
+                {label: "Movie name 3"},
+                {label: "Movie name 4"}
+            ]
+        }
+    })
 });
