@@ -9,6 +9,14 @@ define(['uiComponent'], function(Component){
                 {label: "Movie name 3"},
                 {label: "Movie name 4"}
             ]
+        },
+
+        initObservable: function(){
+            this._super().observe([
+                'movies'
+            ]);
+
+            return this;
         }
     })
 });
