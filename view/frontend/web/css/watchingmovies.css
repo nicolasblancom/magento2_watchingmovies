@@ -1,0 +1,32 @@
+ul.movies {
+    padding: 1.8rem;
+}
+
+ul.movies li {
+    display: flex;
+}
+
+ul.movies li .label {
+    margin-top: 2px;
+    margin-left: 10px;
+    min-width: 80%;
+}
+ul.movies li .status {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+ul.movies li .status:hover {
+    border: 2px solid #82cc78;
+    background: #82cc78;
+}
+ul.movies li .status.is-incomplete {
+    border: 2px solid #ccc;
+}
+
+ul.movies li .status.is-complete {
+    border: 2px solid #82cc78;
+    background: #82cc78;
+}

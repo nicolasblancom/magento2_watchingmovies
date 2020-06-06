@@ -4,10 +4,10 @@ define(['uiComponent'], function(Component){
     return Component.extend({
         defaults: {
             movies: [
-                {label: "Movie name 1"},
-                {label: "Movie name 2"},
-                {label: "Movie name 3"},
-                {label: "Movie name 4"}
+                {label: "Movie name 1", status: false},
+                {label: "Movie name 2", status: false},
+                {label: "Movie name 3", status: false},
+                {label: "Movie name 4", status: true}
             ]
         },
 
