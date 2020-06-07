@@ -12,7 +12,19 @@
         <span class="label" data-bind="i18n: movie().label"/>
     </li>
 </ul>
-
+<ul class="movies" data-bind="foreach: {data: movies2, as: 'movie'}">
+    <li>
+        <a data-bind="
+            attr: {
+              class: 'status ' + (movie.status ? ' is-complete' : ' is-incomplete'),
+              'data-id': movie.id,
+              title: (movie.status ? 'Completed' : 'Not seen')
+            },
+            click: $parent.switchStatus2
+        "></a>
+        <span class="label" data-bind="i18n: movie.label"/>
+    </li>
+</ul>
 <!-- /ko -->
 <!-- ko ifnot: $data.movies -->
 <p data-bind="i18n: 'No movies in your list yet'"></p>
