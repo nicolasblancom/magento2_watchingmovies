@@ -58,6 +58,33 @@ define(['uiComponent', 'jquery', 'ko'], function(Component, $, ko){
             });
 
             self.movies2(items);
+        },
+
+        deleteMovie: function (movieId) {
+            let remainingMovies = [];
+
+            self.movies().forEach(function (_movie) {
+                if(_movie.id !== movieId){
+                    remainingMovies.push(_movie);
+                } else {
+                    // console.log(_movie);
+                }
+            });
+
+            self.movies(remainingMovies);
+        },
+        deleteMovie2: function (movieId) {
+            let remainingMovies = [];
+
+            self.movies2().forEach(function (_movie) {
+                if(_movie().id !== movieId){
+                    remainingMovies.push(ko.observable(_movie()));
+                } else {
+                    // console.log(_movie());
+                }
+            });
+
+            self.movies2(remainingMovies);
         }
     })
 });

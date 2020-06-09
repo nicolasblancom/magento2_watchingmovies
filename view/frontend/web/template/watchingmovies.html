@@ -1,4 +1,5 @@
 <!-- ko if: $data.movies -->
+<p><em>Using KO repeat data binding</em></p>
 <ul class="movies">
     <li repeat="foreach: movies, item: 'movie'">
         <a data-bind="
@@ -10,11 +11,20 @@
             click: switchStatus
         "></a>
         <span class="label" data-bind="i18n: movie().label"/>
+        <a href="#" data-bind="
+            i18n: 'Delete',
+            attr: {
+                'data-id': movie().id
+            },
+            click: deleteMovie.bind($data, movie().id)
+        "></a>
     </li>
 </ul>
-<ul class="movies" data-bind="foreach: {data: movies2, as: 'movie'}">
+
+<p><em>Using KO native foreach</em></p>
+<ul class="movies" data-bind="foreach: {data: movies2(), as: 'movie'}">
     <li>
-        <a data-bind="
+        <a href="#" data-bind="
             attr: {
               class: 'status ' + (movie.status ? ' is-complete' : ' is-incomplete'),
               'data-id': movie.id,
@@ -23,6 +33,13 @@
             click: $parent.switchStatus2
         "></a>
         <span class="label" data-bind="i18n: movie.label"/>
+        <a href="#" data-bind="
+            i18n: 'Delete2',
+            attr: {
+                'data-id': movie.id
+            },
+            click: $parent.deleteMovie2.bind($data, movie.id)
+        "></a>
     </li>
 </ul>
 <!-- /ko -->
