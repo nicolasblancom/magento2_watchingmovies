@@ -1,4 +1,4 @@
-define(['uiComponent', 'jquery', 'ko'], function(Component, $, ko){
+define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(Component, $, ko, confirmation){
     'use strict';
 
     var self;
@@ -61,30 +61,103 @@ define(['uiComponent', 'jquery', 'ko'], function(Component, $, ko){
         },
 
         deleteMovie: function (movieId) {
-            let remainingMovies = [];
+            let theMovie = self.getMovieById(movieId),
+                movieLabel = theMovie ? theMovie.label : $.mage.__('No title');
 
-            self.movies().forEach(function (_movie) {
-                if(_movie.id !== movieId){
-                    remainingMovies.push(_movie);
-                } else {
-                    // console.log(_movie);
-                }
+            confirmation({
+                title: $.mage.__('Delete this movie?'),
+                content: $.mage.__('Are you sure you want to delete "' + movieLabel + '" movie?'),
+                actions: {
+                    confirm: function () {
+                        let remainingMovies = [];
+
+                        self.movies().forEach(function (_movie) {
+                            if(_movie.id !== movieId){
+                                remainingMovies.push(_movie);
+                            } else {
+                                // console.log(_movie);
+                            }
+                        });
+
+                        self.movies(remainingMovies);
+                    },
+                    cancel: function () {
+                        console.log('canceled');
+                    },
+                    always: function () {
+                        console.log('always')
+                    }
+                },
+                buttons: [{
+                    text: $.mage.__('Do not delete'),
+                    class: 'action-secondary action-dismiss',
+                    click: function (event) {
+                        this.closeModal(event);
+                    }
+                }, {
+                    text: $.mage.__('Delete the movie'),
+                    class: 'action-primary action-accept',
+                    click: function (event) {
+                        this.closeModal(event, true);
+                    }
+                }]
             });
-
-            self.movies(remainingMovies);
         },
         deleteMovie2: function (movieId) {
-            let remainingMovies = [];
+            let theMovie = self.getMovieById(movieId),
+                movieLabel = theMovie ? theMovie.label : $.mage.__('No title');
 
-            self.movies2().forEach(function (_movie) {
-                if(_movie().id !== movieId){
-                    remainingMovies.push(ko.observable(_movie()));
-                } else {
-                    // console.log(_movie());
+            confirmation({
+                title: 'Are you deleting this movie?',
+                content: 'Sure? "'+ movieLabel +'" is the movie you want to delete?',
+                actions: {
+                    confirm: function () {
+                        let remainingMovies = [];
+
+                        self.movies2().forEach(function (_movie) {
+                            if(_movie().id !== movieId){
+                                remainingMovies.push(ko.observable(_movie()));
+                            } else {
+                                // console.log(_movie());
+                            }
+                        });
+
+                        self.movies2(remainingMovies);
+                    },
+                    cancel: function () {
+                        console.log('canceled');
+                    },
+                    always: function () {
+                        console.log('always')
+                    }
+                },
+                buttons: [{
+                    text: $.mage.__('Cancel! NOW!'),
+                    class: 'action-secondary action-dismiss',
+                    click: function (event) {
+                        this.closeModal(event);
+                    }
+                }, {
+                    text: $.mage.__('Of course ;)'),
+                    class: 'action-primary action-accept',
+                    click: function (event) {
+                        this.closeModal(event, true);
+                    }
+                }]
+            });
+        },
+
+        getMovieById: function (movieId) {
+            let theMovie = false;
+
+            self.movies().forEach(function (_movie) {
+                if (_movie.id === movieId) {
+                    console.log(_movie);
+                    theMovie = _movie;
                 }
             });
 
-            self.movies2(remainingMovies);
+            return theMovie;
         }
     })
 });
