@@ -5,6 +5,7 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
 
     return Component.extend({
         defaults: {
+            newMovieLabel: '',
             movies: [
                 {id: 1, label: "Movie name 1", status: false},
                 {id: 2, label: "Movie name 2", status: false},
@@ -26,6 +27,7 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
 
         initObservable: function(){
             this._super().observe([
+                'newMovieLabel',
                 'movies',
                 'movies2'
             ]);
@@ -116,6 +118,7 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
 
                         self.movies2().forEach(function (_movie) {
                             if(_movie().id !== movieId){
+                                console.log(_movie);
                                 remainingMovies.push(ko.observable(_movie()));
                             } else {
                                 // console.log(_movie());
@@ -158,6 +161,39 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             });
 
             return theMovie;
+        },
+
+        addMovie: function () {
+            self._addMovieHelper1();
+            self._addMovieHelper2();
+            self.newMovieLabel('');
+        },
+
+        _addMovieHelper1: function () {
+            self.movies.push({
+                id: Math.floor(Math.random() * 100),
+                label: self.newMovieLabel(),
+                status: false
+            });
+
+            // console.log(self.movies());
+        },
+
+        _addMovieHelper2: function () {
+            let theMovie = ko.observable({
+                id: Math.floor(Math.random() * 100),
+                label: self.newMovieLabel(),
+                status: false
+            });
+            self.movies2.push(theMovie);
+
+            // console.log(self.movies2());
+        },
+
+        checkKey: function (data, event) {
+            if (event.keyCode === 13) {
+                self.addMovie();
+            }
         }
     })
 });

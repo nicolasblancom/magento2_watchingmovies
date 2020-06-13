@@ -1,3 +1,27 @@
+<div class="form-container">
+    <input type="text" name="movie" id="new-movie-input" class="new-movie-input"
+           data-bind="
+                attr: {
+                    placeholder: $t('Add new movie...')
+                },
+                value: newMovieLabel,
+                event: {'keyup': checkKey}
+    ">
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="button" class="action primary save" id="add-new-movie-button"
+                data-bind="
+                    i18n: 'Add movie!',
+                    attr: {
+                        title: $t('Add new movie')
+                    },
+                    click: addMovie
+            ">
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- ko if: $data.movies -->
 <p><em>Using KO repeat data binding</em></p>
 <ul class="movies">
