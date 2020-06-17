@@ -1,0 +1,47 @@
+ul.movies {
+    padding: 1.8rem;
+}
+
+ul.movies li {
+    display: flex;
+}
+
+ul.movies li .label {
+    margin-top: 2px;
+    margin-left: 10px;
+    min-width: 80%;
+}
+ul.movies li .status {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+ul.movies li .status:hover {
+    border: 2px solid #82cc78;
+    background: #82cc78;
+}
+ul.movies li .status.is-incomplete {
+    border: 2px solid #ccc;
+}
+
+ul.movies li .status.is-complete {
+    border: 2px solid #82cc78;
+    background: #82cc78;
+}
+
+.form-container {
+    margin: 0 20px 20px 20px;
+    display: flex;
+}
+.form-container .movie-input-field {
+    max-width: 80%;
+    border-radius: 2px;
+}
+.form-container .actions-toolbar {
+    margin-left: 5px;
+}
+.form-container .action.save {
+    white-space: nowrap;
+}

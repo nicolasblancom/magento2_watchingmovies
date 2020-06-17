@@ -10,5 +10,21 @@
                 <argument translate="true" name="title" xsi:type="string">The Movies I'm watching</argument>
             </action>
         </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="nicolasblancom.watchingmovies.block.list"
+                   template="NicolasBlancoM_WatchingMovies::watchingmovies.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="watchingmovies" xsi:type="array">
+                                <item name="component" xsi:type="string">NicolasBlancoM_WatchingMovies/js/view/watchingmovies</item>
+                                <item name="template" xsi:type="string">NicolasBlancoM_WatchingMovies/watchingmovies</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
     </body>
 </page>

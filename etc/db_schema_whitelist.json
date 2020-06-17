@@ -1,0 +1,14 @@
+{
+    "nicolasblancom_watchingmovies_movie": {
+        "column": {
+            "movie_id": true,
+            "label": true,
+            "status": true,
+            "customer_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "NICOLASBLANCOM_WATCHINGMOVIES_MOVIE_CSTR_ID_CSTR_ENTT_ENTT_ID": true
+        }
+    }
+}
