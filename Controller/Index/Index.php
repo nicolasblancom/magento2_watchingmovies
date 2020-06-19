@@ -9,6 +9,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use NicolasBlancoM\WatchingMovies\Model\MovieFactory;
 use NicolasBlancoM\WatchingMovies\Model\ResourceModel\Movie as MovieResource;
+use NicolasBlancoM\WatchingMovies\Service\MovieRepository;
 
 class Index extends Action
 {
@@ -22,13 +23,17 @@ class Index extends Action
      */
     private $movieResource;
 
+    private $_movieRepository;
+
     public function __construct(
         Context $context,
         MovieFactory $movieFactory,
-        MovieResource $movieResource
+        MovieResource $movieResource,
+        MovieRepository $movieRepository
     ){
         $this->movieFactory = $movieFactory;
         $this->movieResource = $movieResource;
+        $this->_movieRepository = $movieRepository;
 
         parent::__construct($context);
     }
@@ -44,6 +49,12 @@ class Index extends Action
         ]);
         $this->movieResource->save($movie);*/
         // END Test ORM
+
+        // Test MovieRepository
+        /*$movie = $this->_movieRepository->get(1);
+
+        var_dump($movie->getData());*/
+        // END Test MovieRepository
 
         return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
     }
