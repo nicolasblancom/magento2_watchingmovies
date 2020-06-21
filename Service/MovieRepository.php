@@ -50,9 +50,11 @@ class MovieRepository implements MovieRepositoryInterface
     public function getList(SearchCriteriaInterface $searchCriteria): MovieSearchResultInterface
     {
         $searchResult = $this->_searchResultFactory->create();
-        $searchResult->setCriteria($searchCriteria);
+        $searchResult->setSearchCriteria($searchCriteria);
 
         $this->_collecctionProcessor->process($searchCriteria, $searchResult);
+
+        return $searchResult;
     }
 
     public function get(int $movieId)
