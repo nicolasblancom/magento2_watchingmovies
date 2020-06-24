@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace NicolasBlancoM\WatchingMovies\Controller\Index;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use NicolasBlancoM\WatchingMovies\Model\MovieFactory;
 use NicolasBlancoM\WatchingMovies\Model\ResourceModel\Movie as MovieResource;
+use NicolasBlancoM\WatchingMovies\Service\MovieRepository;
 
 class Index extends Action
 {
@@ -22,13 +24,27 @@ class Index extends Action
      */
     private $movieResource;
 
+    /**
+     * @var MovieRepository
+     */
+    private $_movieRepository;
+
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    private $_searchCriteriaBuilder;
+
     public function __construct(
         Context $context,
         MovieFactory $movieFactory,
-        MovieResource $movieResource
+        MovieResource $movieResource,
+        MovieRepository $movieRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ){
         $this->movieFactory = $movieFactory;
         $this->movieResource = $movieResource;
+        $this->_movieRepository = $movieRepository;
+        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
 
         parent::__construct($context);
     }
@@ -44,6 +60,18 @@ class Index extends Action
         ]);
         $this->movieResource->save($movie);*/
         // END Test ORM
+
+        // Test MovieRepository
+        /*$movie = $this->_movieRepository->get(1);
+
+        var_dump($movie->getData());*/
+        // END Test MovieRepository
+
+        // Test Repository service
+        /*$searchCriteria = $this->_searchCriteriaBuilder->create();
+        $movies = $this->_movieRepository->getList($searchCriteria)->getItems();
+        var_dump($movies);*/
+        // END Test Repository service
 
         return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
     }
