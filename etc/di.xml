@@ -2,6 +2,9 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="NicolasBlancoM\WatchingMovies\Api\MovieManagementInterface" type="NicolasBlancoM\WatchingMovies\Service\MovieManagement"/>
     <preference for="NicolasBlancoM\WatchingMovies\Api\MovieRepositoryInterface" type="NicolasBlancoM\WatchingMovies\Service\MovieRepository"/>
+
     <preference for="NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface" type="NicolasBlancoM\WatchingMovies\Model\Movie"/>
     <preference for="NicolasBlancoM\WatchingMovies\Api\Data\MovieSearchResultInterface" type="NicolasBlancoM\WatchingMovies\Model\ResourceModel\Movie\Collection"/>
+
+    <preference for="NicolasBlancoM\WatchingMovies\Api\CustomerMovieListInterface" type="NicolasBlancoM\WatchingMovies\Service\CustomerMovieList"/>
 </config>
