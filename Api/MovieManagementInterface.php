@@ -1,12 +1,22 @@
 <?php
 namespace NicolasBlancoM\WatchingMovies\Api;
 
+use NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface;
+
 /**
  * @api
  */
 interface MovieManagementInterface
 {
-    public function save();
+    /**
+     * @param \NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface $movie
+     * @return bool
+     */
+    public function save(MovieInterface $movie);
 
-    public function delete();
+    /**
+     * @param \NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface $movie
+     * @return bool
+     */
+    public function delete(MovieInterface $movie);
 }
