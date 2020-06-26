@@ -9,7 +9,7 @@ use NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface;
 interface CustomerMovieListInterface
 {
     /**
-     * @return \NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface
+     * @return NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface[]
      */
     public function getList();
 }
