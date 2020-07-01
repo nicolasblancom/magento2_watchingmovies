@@ -1,4 +1,10 @@
-define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(Component, $, ko, confirmation){
+define([
+    'uiComponent',
+    'jquery',
+    'ko',
+    'Magento_Ui/js/modal/confirm',
+    'NicolasBlancoM_WatchingMovies/js/service/watchingmovies'
+    ], function(Component, $, ko, confirmation, watchingMoviesService){
     'use strict';
 
     var self;
@@ -7,16 +13,16 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
         defaults: {
             newMovieLabel: '',
             movies: [
-                {id: 1, label: "Movie name 1", status: false},
+                /*{id: 1, label: "Movie name 1", status: false},
                 {id: 2, label: "Movie name 2", status: false},
                 {id: 3, label: "Movie name 3", status: false},
-                {id: 4, label: "Movie name 4", status: true}
+                {id: 4, label: "Movie name 4", status: true}*/
             ],
             movies2: [
-                ko.observable({id: 1, label: "Movie name 1", status: false}),
-                ko.observable({id: 2, label: "Movie name 2", status: false}),
-                ko.observable({id: 3, label: "Movie name 3", status: false}),
-                ko.observable({id: 4, label: "Movie name 4", status: true})
+                /*ko.observable({movie_id: 1, label: "Movie name 1", status: 'open'}),
+                ko.observable({movie_id: 2, label: "Movie name 2", status: 'open'}),
+                ko.observable({movie_id: 3, label: "Movie name 3", status: 'open'}),
+                ko.observable({movie_id: 4, label: "Movie name 4", status: 'complete'})*/
             ]
         },
 
@@ -32,6 +38,25 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
                 'movies2'
             ]);
 
+            // use web api to get list of movies (movies: using 'repeat' binding in view)
+            watchingMoviesService.getList().then(function (_movies) {
+                self.movies(_movies);
+
+                return this;
+            });
+
+            // use web api to get list of movies (movies2: using 'foreach' binding in view)
+            watchingMoviesService.getList().then(function (_movies) {
+                _movies.forEach(function (_movie) {
+                    self.movies2.push(
+                        ko.observable(_movie)
+                    );
+                });
+
+                return this;
+
+            });
+
             return this;
         },
 
@@ -39,8 +64,8 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             const movieId = $(event.target).data('id');
 
             let items = this.movies().map(function(_movie){
-                if (_movie.id === movieId) {
-                    _movie.status = !_movie.status;
+                if (_movie.movie_id === movieId) {
+                    _movie.status = _movie.status === 'open' ? 'complete' : 'open';
                 }
                 return _movie;
             });
@@ -51,9 +76,9 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             const movieId = $(event.target).data('id');
 
             let items = self.movies2().map(function(_movie){
-                if (_movie().id === movieId) {
 
-                    _movie().status = !_movie().status;
+                if (_movie().movie_id === movieId) {
+                    _movie().status = _movie().status === 'open' ? 'complete' : 'open';
                 }
 
                 return ko.observable(_movie());
@@ -74,7 +99,7 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
                         let remainingMovies = [];
 
                         self.movies().forEach(function (_movie) {
-                            if(_movie.id !== movieId){
+                            if(_movie.movie_id !== movieId){
                                 remainingMovies.push(_movie);
                             } else {
                                 // console.log(_movie);
@@ -117,7 +142,7 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
                         let remainingMovies = [];
 
                         self.movies2().forEach(function (_movie) {
-                            if(_movie().id !== movieId){
+                            if(_movie().movie_id !== movieId){
                                 console.log(_movie);
                                 remainingMovies.push(ko.observable(_movie()));
                             } else {
@@ -154,7 +179,7 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             let theMovie = false;
 
             self.movies().forEach(function (_movie) {
-                if (_movie.id === movieId) {
+                if (_movie.movie_id === movieId) {
                     console.log(_movie);
                     theMovie = _movie;
                 }
@@ -171,9 +196,9 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
 
         _addMovieHelper1: function () {
             self.movies.push({
-                id: Math.floor(Math.random() * 100),
+                movie_id: Math.floor(Math.random() * 100),
                 label: self.newMovieLabel(),
-                status: false
+                status: 'open'
             });
 
             // console.log(self.movies());
@@ -181,9 +206,9 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
 
         _addMovieHelper2: function () {
             let theMovie = ko.observable({
-                id: Math.floor(Math.random() * 100),
+                movie_id: Math.floor(Math.random() * 100),
                 label: self.newMovieLabel(),
-                status: false
+                status: 'open'
             });
             self.movies2.push(theMovie);
 

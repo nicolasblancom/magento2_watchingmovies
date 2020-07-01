@@ -28,9 +28,9 @@
     <li repeat="foreach: movies, item: 'movie'">
         <a data-bind="
             attr: {
-              class: 'status ' + (movie().status ? ' is-complete' : ' is-incomplete'),
-              'data-id': movie().id,
-              title: (movie().status ? 'Completed' : 'Not seen')
+              class: 'status ' + (movie().status === 'complete' ? ' is-complete' : ' is-incomplete'),
+              'data-id': movie().movie_id,
+              title: (movie().status === 'complete' ? 'Completed' : 'Not seen')
             },
             click: switchStatus
         "></a>
@@ -38,9 +38,9 @@
         <a href="#" data-bind="
             i18n: 'Delete',
             attr: {
-                'data-id': movie().id
+                'data-id': movie().movie_id
             },
-            click: deleteMovie.bind($data, movie().id)
+            click: deleteMovie.bind($data, movie().movie_id)
         "></a>
     </li>
 </ul>
@@ -50,9 +50,9 @@
     <li>
         <a href="#" data-bind="
             attr: {
-              class: 'status ' + (movie.status ? ' is-complete' : ' is-incomplete'),
-              'data-id': movie.id,
-              title: (movie.status ? 'Completed' : 'Not seen')
+              class: 'status ' + (movie.status === 'complete' ? ' is-complete' : ' is-incomplete'),
+              'data-id': movie.movie_id,
+              title: (movie.status === 'complete' ? 'Completed' : 'Not seen')
             },
             click: $parent.switchStatus2
         "></a>
@@ -60,9 +60,9 @@
         <a href="#" data-bind="
             i18n: 'Delete2',
             attr: {
-                'data-id': movie.id
+                'data-id': movie.movie_id
             },
-            click: $parent.deleteMovie2.bind($data, movie.id)
+            click: $parent.deleteMovie2.bind($data, movie.movie_id)
         "></a>
     </li>
 </ul>
