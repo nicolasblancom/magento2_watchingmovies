@@ -66,6 +66,7 @@ define([
             let items = this.movies().map(function(_movie){
                 if (_movie.movie_id === movieId) {
                     _movie.status = _movie.status === 'open' ? 'complete' : 'open';
+                    watchingMoviesService.update(_movie.movie_id, _movie.status);
                 }
                 return _movie;
             });
@@ -79,6 +80,7 @@ define([
 
                 if (_movie().movie_id === movieId) {
                     _movie().status = _movie().status === 'open' ? 'complete' : 'open';
+                    watchingMoviesService.update(_movie().movie_id, _movie().status);
                 }
 
                 return ko.observable(_movie());

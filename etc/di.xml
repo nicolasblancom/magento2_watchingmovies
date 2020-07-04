@@ -7,4 +7,5 @@
     <preference for="NicolasBlancoM\WatchingMovies\Api\Data\MovieSearchResultInterface" type="NicolasBlancoM\WatchingMovies\Model\ResourceModel\Movie\Collection"/>
 
     <preference for="NicolasBlancoM\WatchingMovies\Api\CustomerMovieListInterface" type="NicolasBlancoM\WatchingMovies\Service\CustomerMovieList"/>
+    <preference for="NicolasBlancoM\WatchingMovies\Api\MovieStatusManagementInterface" type="NicolasBlancoM\WatchingMovies\Service\MovieStatusManagement"/>
 </config>

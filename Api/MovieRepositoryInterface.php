@@ -2,6 +2,7 @@
 namespace NicolasBlancoM\WatchingMovies\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
+use NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface;
 use NicolasBlancoM\WatchingMovies\Api\Data\MovieSearchResultInterface;
 
 /**
@@ -15,5 +16,9 @@ interface MovieRepositoryInterface
      */
     public function getList(SearchCriteriaInterface $searchCriteria): MovieSearchResultInterface;
 
-    public function get(int $movieId);
+    /**
+     * @param int $movieId
+     * @return \NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface;
+     */
+    public function get(int $movieId): MovieInterface;
 }

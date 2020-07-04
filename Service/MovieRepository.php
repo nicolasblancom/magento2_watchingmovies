@@ -3,6 +3,7 @@ namespace NicolasBlancoM\WatchingMovies\Service;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface;
 use NicolasBlancoM\WatchingMovies\Api\Data\MovieSearchResultInterface;
 use NicolasBlancoM\WatchingMovies\Api\Data\MovieSearchResultInterfaceFactory;
 use NicolasBlancoM\WatchingMovies\Api\MovieRepositoryInterface;
@@ -57,7 +58,11 @@ class MovieRepository implements MovieRepositoryInterface
         return $searchResult;
     }
 
-    public function get(int $movieId)
+    /**
+     * @param int $movieId
+     * @return MovieInterface
+     */
+    public function get(int $movieId): MovieInterface
     {
         $movie = $this->_movieFactory->create();
 

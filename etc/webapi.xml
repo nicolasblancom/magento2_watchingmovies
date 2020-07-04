@@ -6,4 +6,10 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route url="/V1/customer/watchingmovies/movies/update" method="POST">
+        <service class="NicolasBlancoM\WatchingMovies\Api\MovieStatusManagementInterface" method="change"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>
