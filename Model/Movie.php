@@ -25,6 +25,14 @@ class Movie extends AbstractModel implements MovieInterface
     }
 
     /**
+     * @param int $movieId
+     */
+    public function setMovieId(int $movieId)
+    {
+        $this->setData(self::MOVIE_ID, $movieId);
+    }
+
+    /**
      * @return string
      */
     public function getStatus(): string
@@ -33,10 +41,26 @@ class Movie extends AbstractModel implements MovieInterface
     }
 
     /**
+     * @param string $status
+     */
+    public function setStatus(string $status)
+    {
+        $this->setData(self::STATUS, $status);
+    }
+
+    /**
      * @return string
      */
     public function getLabel(): string
     {
         return $this->getData(self::LABEL);
+    }
+
+    /**
+     * @param string $label
+     */
+    public function setLabel(string $label)
+    {
+        $this->setData(self::LABEL, $label);
     }
 }
