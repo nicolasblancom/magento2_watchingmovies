@@ -21,21 +21,26 @@ class MovieManagement implements MovieManagementInterface
 
     /**
      * @param MovieInterface $movie
-     * @return void
+     * @return bool
      * @throws \Magento\Framework\Exception\AlreadyExistsException
      */
-    public function save(MovieInterface $movie)
+    public function save(MovieInterface $movie): bool
     {
         $this->_movieResource->save($movie);
+
+        return true;
     }
 
     /**
      * @param MovieInterface $movie
-     * @return void
+     * @return bool
+     * @throws \Exception
      */
-    public function delete(MovieInterface $movie)
+    public function delete(MovieInterface $movie): bool
     {
-        $this->delete($movie);
+        $this->_movieResource->delete($movie);
+
+        return true;
     }
 
 }

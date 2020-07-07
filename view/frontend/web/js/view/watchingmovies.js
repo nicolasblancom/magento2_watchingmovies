@@ -100,6 +100,12 @@ define([
                     confirm: function () {
                         let remainingMovies = [];
 
+                        watchingMoviesService.delete( self.movies().find( function(_movie){
+                            if(_movie.movie_id === movieId){
+                                return _movie;
+                            }
+                        }));
+
                         self.movies().forEach(function (_movie) {
                             if(_movie.movie_id !== movieId){
                                 remainingMovies.push(_movie);
@@ -143,9 +149,14 @@ define([
                     confirm: function () {
                         let remainingMovies = [];
 
+                        watchingMoviesService.delete( self.movies().find( function(_movie){
+                            if(_movie.movie_id === movieId){
+                                return _movie;
+                            }
+                        }));
+
                         self.movies2().forEach(function (_movie) {
                             if(_movie().movie_id !== movieId){
-                                console.log(_movie);
                                 remainingMovies.push(ko.observable(_movie()));
                             } else {
                                 // console.log(_movie());
@@ -182,7 +193,7 @@ define([
 
             self.movies().forEach(function (_movie) {
                 if (_movie.movie_id === movieId) {
-                    console.log(_movie);
+                    //console.log(_movie);
                     theMovie = _movie;
                 }
             });

@@ -13,6 +13,14 @@ define(['mage/storage'], function(storage){
                     status: status
                 })
             );
+        },
+        delete: async function(movie){
+            return await storage.post(
+                'rest/V1/customer/watchingmovies/movies/delete',
+                JSON.stringify({
+                    movie: movie
+                })
+            );
         }
     }
 });
