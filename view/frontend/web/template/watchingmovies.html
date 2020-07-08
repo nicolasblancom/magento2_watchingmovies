@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<!-- ko if: $data.movies -->
+<!-- ko if: $data.movies().length > 0 -->
 <p><em>Using KO repeat data binding</em></p>
 <ul class="movies">
     <li repeat="foreach: movies, item: 'movie'">
@@ -67,6 +67,6 @@
     </li>
 </ul>
 <!-- /ko -->
-<!-- ko ifnot: $data.movies -->
+<!-- ko ifnot: $data.movies().length > 0 -->
 <p data-bind="i18n: 'No movies in your list yet'"></p>
 <!-- /ko -->
