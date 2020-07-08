@@ -202,27 +202,29 @@ define([
         },
 
         addMovie: function () {
-            self._addMovieHelper1();
-            self._addMovieHelper2();
+            let newMovie = {
+                label: self.newMovieLabel(),
+                status: 'open'
+            }
+
+            watchingMoviesService.create(newMovie)
+                .then(function(_movieId){
+                    newMovie.movie_id = _movieId;
+
+                    self._addMovieHelper1(newMovie);
+                    self._addMovieHelper2(newMovie);
+                })
             self.newMovieLabel('');
         },
 
-        _addMovieHelper1: function () {
-            self.movies.push({
-                movie_id: Math.floor(Math.random() * 100),
-                label: self.newMovieLabel(),
-                status: 'open'
-            });
+        _addMovieHelper1: function (newMovie) {
+            self.movies.push(newMovie);
 
             // console.log(self.movies());
         },
 
-        _addMovieHelper2: function () {
-            let theMovie = ko.observable({
-                movie_id: Math.floor(Math.random() * 100),
-                label: self.newMovieLabel(),
-                status: 'open'
-            });
+        _addMovieHelper2: function (newMovie) {
+            let theMovie = ko.observable(newMovie);
             self.movies2.push(theMovie);
 
             // console.log(self.movies2());

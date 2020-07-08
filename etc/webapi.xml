@@ -18,4 +18,10 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route url="/V1/customer/watchingmovies/movies/create" method="POST">
+        <service class="NicolasBlancoM\WatchingMovies\Api\MovieManagementInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>

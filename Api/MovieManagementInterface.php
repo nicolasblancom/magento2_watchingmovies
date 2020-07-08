@@ -13,9 +13,9 @@ interface MovieManagementInterface
 {
     /**
      * @param \NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface $movie
-     * @return bool
+     * @return int
      */
-    public function save(MovieInterface $movie): bool;
+    public function save(MovieInterface $movie): int;
 
     /**
      * @param \NicolasBlancoM\WatchingMovies\Api\Data\MovieInterface $movie

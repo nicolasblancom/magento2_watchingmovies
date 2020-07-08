@@ -21,6 +21,14 @@ define(['mage/storage'], function(storage){
                     movie: movie
                 })
             );
+        },
+        create: async function(movie){
+            return await storage.post(
+                'rest/V1/customer/watchingmovies/movies/create',
+                JSON.stringify({
+                    movie: movie
+                })
+            );
         }
     }
 });
