@@ -3,8 +3,9 @@ define([
     'jquery',
     'ko',
     'Magento_Ui/js/modal/confirm',
-    'NicolasBlancoM_WatchingMovies/js/service/watchingmovies'
-    ], function(Component, $, ko, confirmation, watchingMoviesService){
+    'NicolasBlancoM_WatchingMovies/js/service/watchingmovies',
+    'NicolasBlancoM_WatchingMovies/js/model/loader'
+    ], function(Component, $, ko, confirmation, watchingMoviesService, loader){
     'use strict';
 
     var self;
@@ -207,6 +208,8 @@ define([
                 status: 'open'
             }
 
+            loader.startLoader();
+
             watchingMoviesService.create(newMovie)
                 .then(function(_movieId){
                     newMovie.movie_id = _movieId;
@@ -214,6 +217,9 @@ define([
                     self._addMovieHelper1(newMovie);
                     self._addMovieHelper2(newMovie);
                 })
+                .finally(function(){
+                    loader.stopLoader();
+                });
             self.newMovieLabel('');
         },
 
