@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/customer/watchingmovies/movies" method="GET">
+        <service class="NicolasBlancoM\WatchingMovies\Api\CustomerMovieListInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/customer/watchingmovies/movies/update" method="POST">
+        <service class="NicolasBlancoM\WatchingMovies\Api\MovieStatusManagementInterface" method="change"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/customer/watchingmovies/movies/delete" method="POST">
+        <service class="NicolasBlancoM\WatchingMovies\Api\MovieManagementInterface" method="delete"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/customer/watchingmovies/movies/create" method="POST">
+        <service class="NicolasBlancoM\WatchingMovies\Api\MovieManagementInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

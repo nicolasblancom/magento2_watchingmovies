@@ -10,6 +10,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use NicolasBlancoM\WatchingMovies\Model\MovieFactory;
 use NicolasBlancoM\WatchingMovies\Model\ResourceModel\Movie as MovieResource;
+use NicolasBlancoM\WatchingMovies\Service\MovieManagement;
 use NicolasBlancoM\WatchingMovies\Service\MovieRepository;
 
 class Index extends Action
@@ -30,6 +31,11 @@ class Index extends Action
     private $_movieRepository;
 
     /**
+     * @var MovieManagement
+     */
+    private $_movieManagement;
+
+    /**
      * @var SearchCriteriaBuilder
      */
     private $_searchCriteriaBuilder;
@@ -39,11 +45,13 @@ class Index extends Action
         MovieFactory $movieFactory,
         MovieResource $movieResource,
         MovieRepository $movieRepository,
+        MovieManagement $movieManagement,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ){
         $this->movieFactory = $movieFactory;
         $this->movieResource = $movieResource;
         $this->_movieRepository = $movieRepository;
+        $this->_movieManagement = $movieManagement;
         $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
 
         parent::__construct($context);
@@ -72,6 +80,17 @@ class Index extends Action
         $movies = $this->_movieRepository->getList($searchCriteria)->getItems();
         var_dump($movies);*/
         // END Test Repository service
+
+        // Test Management service
+        /*$movie = $this->_movieRepository->get(1);
+        $movie->setData('status', 'complete'); // change some data
+        $this->_movieManagement->save($movie); // save it using management class
+
+        // use Repository class to see results
+        $searchCriteria = $this->_searchCriteriaBuilder->create();
+        $movies = $this->_movieRepository->getList($searchCriteria)->getItems();
+        var_dump($movies);*/
+        // END Test Management service
 
         return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
     }

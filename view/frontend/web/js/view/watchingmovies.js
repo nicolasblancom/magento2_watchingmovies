@@ -1,4 +1,11 @@
-define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(Component, $, ko, confirmation){
+define([
+    'uiComponent',
+    'jquery',
+    'ko',
+    'Magento_Ui/js/modal/confirm',
+    'NicolasBlancoM_WatchingMovies/js/service/watchingmovies',
+    'NicolasBlancoM_WatchingMovies/js/model/loader'
+    ], function(Component, $, ko, confirmation, watchingMoviesService, loader){
     'use strict';
 
     var self;
@@ -7,16 +14,16 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
         defaults: {
             newMovieLabel: '',
             movies: [
-                {id: 1, label: "Movie name 1", status: false},
+                /*{id: 1, label: "Movie name 1", status: false},
                 {id: 2, label: "Movie name 2", status: false},
                 {id: 3, label: "Movie name 3", status: false},
-                {id: 4, label: "Movie name 4", status: true}
+                {id: 4, label: "Movie name 4", status: true}*/
             ],
             movies2: [
-                ko.observable({id: 1, label: "Movie name 1", status: false}),
-                ko.observable({id: 2, label: "Movie name 2", status: false}),
-                ko.observable({id: 3, label: "Movie name 3", status: false}),
-                ko.observable({id: 4, label: "Movie name 4", status: true})
+                /*ko.observable({movie_id: 1, label: "Movie name 1", status: 'open'}),
+                ko.observable({movie_id: 2, label: "Movie name 2", status: 'open'}),
+                ko.observable({movie_id: 3, label: "Movie name 3", status: 'open'}),
+                ko.observable({movie_id: 4, label: "Movie name 4", status: 'complete'})*/
             ]
         },
 
@@ -32,6 +39,25 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
                 'movies2'
             ]);
 
+            // use web api to get list of movies (movies: using 'repeat' binding in view)
+            watchingMoviesService.getList().then(function (_movies) {
+                self.movies(_movies);
+
+                return this;
+            });
+
+            // use web api to get list of movies (movies2: using 'foreach' binding in view)
+            watchingMoviesService.getList().then(function (_movies) {
+                _movies.forEach(function (_movie) {
+                    self.movies2.push(
+                        ko.observable(_movie)
+                    );
+                });
+
+                return this;
+
+            });
+
             return this;
         },
 
@@ -39,8 +65,9 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             const movieId = $(event.target).data('id');
 
             let items = this.movies().map(function(_movie){
-                if (_movie.id === movieId) {
-                    _movie.status = !_movie.status;
+                if (_movie.movie_id === movieId) {
+                    _movie.status = _movie.status === 'open' ? 'complete' : 'open';
+                    watchingMoviesService.update(_movie.movie_id, _movie.status);
                 }
                 return _movie;
             });
@@ -51,9 +78,10 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             const movieId = $(event.target).data('id');
 
             let items = self.movies2().map(function(_movie){
-                if (_movie().id === movieId) {
 
-                    _movie().status = !_movie().status;
+                if (_movie().movie_id === movieId) {
+                    _movie().status = _movie().status === 'open' ? 'complete' : 'open';
+                    watchingMoviesService.update(_movie().movie_id, _movie().status);
                 }
 
                 return ko.observable(_movie());
@@ -73,8 +101,14 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
                     confirm: function () {
                         let remainingMovies = [];
 
+                        watchingMoviesService.delete( self.movies().find( function(_movie){
+                            if(_movie.movie_id === movieId){
+                                return _movie;
+                            }
+                        }));
+
                         self.movies().forEach(function (_movie) {
-                            if(_movie.id !== movieId){
+                            if(_movie.movie_id !== movieId){
                                 remainingMovies.push(_movie);
                             } else {
                                 // console.log(_movie);
@@ -116,9 +150,14 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
                     confirm: function () {
                         let remainingMovies = [];
 
+                        watchingMoviesService.delete( self.movies().find( function(_movie){
+                            if(_movie.movie_id === movieId){
+                                return _movie;
+                            }
+                        }));
+
                         self.movies2().forEach(function (_movie) {
-                            if(_movie().id !== movieId){
-                                console.log(_movie);
+                            if(_movie().movie_id !== movieId){
                                 remainingMovies.push(ko.observable(_movie()));
                             } else {
                                 // console.log(_movie());
@@ -154,8 +193,8 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
             let theMovie = false;
 
             self.movies().forEach(function (_movie) {
-                if (_movie.id === movieId) {
-                    console.log(_movie);
+                if (_movie.movie_id === movieId) {
+                    //console.log(_movie);
                     theMovie = _movie;
                 }
             });
@@ -164,27 +203,34 @@ define(['uiComponent', 'jquery', 'ko', 'Magento_Ui/js/modal/confirm'], function(
         },
 
         addMovie: function () {
-            self._addMovieHelper1();
-            self._addMovieHelper2();
+            let newMovie = {
+                label: self.newMovieLabel(),
+                status: 'open'
+            }
+
+            loader.startLoader();
+
+            watchingMoviesService.create(newMovie)
+                .then(function(_movieId){
+                    newMovie.movie_id = _movieId;
+
+                    self._addMovieHelper1(newMovie);
+                    self._addMovieHelper2(newMovie);
+                })
+                .finally(function(){
+                    loader.stopLoader();
+                });
             self.newMovieLabel('');
         },
 
-        _addMovieHelper1: function () {
-            self.movies.push({
-                id: Math.floor(Math.random() * 100),
-                label: self.newMovieLabel(),
-                status: false
-            });
+        _addMovieHelper1: function (newMovie) {
+            self.movies.push(newMovie);
 
             // console.log(self.movies());
         },
 
-        _addMovieHelper2: function () {
-            let theMovie = ko.observable({
-                id: Math.floor(Math.random() * 100),
-                label: self.newMovieLabel(),
-                status: false
-            });
+        _addMovieHelper2: function (newMovie) {
+            let theMovie = ko.observable(newMovie);
             self.movies2.push(theMovie);
 
             // console.log(self.movies2());
